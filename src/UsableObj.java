@@ -1,20 +1,16 @@
-/**
- * 
- * @author Rich
- * Every Object has a name and a description. 
- * Some objects have their own commands.
- */
-
 import java.util.ArrayList;
 
-public class Object {
+public class UsableObj extends Obj {
 	
-	// TODO all of this stuff below belongs into a subclass -> Refactor! Super constructor should contain name and description.
+	private String descriptionFocus; // a detailed description when focused on the object
+	private ArrayList <String> commands = new ArrayList<>(); // contains the possible commands in interaction with an object
 	
-	private boolean used = false; // gets true when all commands or an irrevocable one was taken
-	private ArrayList <String> commands = new ArrayList<>();
-	
-	public Object () {
+	public UsableObj (String name, String descriptionRoom, String descriptionFocus) {
+		
+		super(name, descriptionRoom);
+		
+		this.descriptionFocus = descriptionFocus;
+		
 		commands.add("Interessiert dich nicht..."); //Any object may be exited at any time
 	}
 	
@@ -40,8 +36,7 @@ public class Object {
 		return allOptions;
 	}
 	
-	public void changeUsedStatus () {
-		used = true;
+	public String getDescritpionFocus () {
+		return descriptionFocus;
 	}
-
 }
