@@ -17,21 +17,29 @@ import java.util.Scanner;
 
 public class Game {
 	
-	private static boolean gameWon = false;
-	private static boolean enemyArrived = false;
+	private boolean gameWon = false;
+	private boolean enemyArrived = false;
 	
-	UsableObj hund, meinungsverstärker;
+	UsableObj hund, meinungsverstaerker;
 	StaticObj tv;
 	
-	private static ArrayList<Obj> objects = new ArrayList<>();
+	public Game() {
+		addObjectsToGame();
+	}
+	private ArrayList<Obj> objects = new ArrayList<>();
 	
+	//at this point all the wished objects are created and described.
 	private void addObjectsToGame() {
 		objects.add(hund = new UsableObj("Hund", "der Hund liegt links neben dir auf der Couch, vielleicht ist er tot. Auf jeden Fall riecht er ganz streng", "du lehnst dich zu ihm vor. Er murmelt etwas vor sich hin, aber er ist nicht ansprechbar. "));
-		objects.add(meinungsverstärker = new UsableObj("Meinungsverstärker", "Ein solider Bambusstock", "Oh nein! Er hat Krebs!"));
+			hund.addCommand("Rüttel ihn!");
+			hund.addCommand("Schlag ihn!");
+			
+		objects.add(meinungsverstaerker = new UsableObj("Meinungsverstärker", "Ein solider Bambusstock", "Oh nein! Er hat Krebs!"));
+			meinungsverstaerker.addCommand("Heb ihn auf");
 		objects.add(tv = new StaticObj("Fernseher", "Auf dem Uraltfernseher läuft die Wiederholung eines ProEvo Spiels in Endlosschleife.."));
 	}
 	
-	private static String listObjects() {
+	private String listObjects() {
 		String objectList = "Du bist sehr wach und siehst folgende Sachen: \n";
 		int index = 1;
 		for(Obj object : objects) {
@@ -41,45 +49,42 @@ public class Game {
 		return objectList;
 	}
 	
-	private static String welcomeText()	{
-		return "Hey!";
-	}
-	
-	private static String gameWonText() {
-		return "Well done bro";
-	}
-	
-	private static String gameOverText() {
-		return "Du bist am Arsch!";
-	}
-	
-	public static void main(String[] args ) {
-		Game game = new Game();
+	public void play() {
 		Scanner scanner = new Scanner(System.in);
-		
-		game.addObjectsToGame();
 		
 		System.out.println(welcomeText());
 		
 		while(!gameWon && !enemyArrived) {
 			System.out.println(listObjects());
-			System.out.println("Was willst du dir genauer anschauen?");
+			System.out.println("Was willst du dir genauer anschauen? Gebe die entsprechende Zahl ein und bestätige mit Enter.");
 			int choice = scanner.nextInt();
-			//KLEINER TEST AB HIER
-			System.out.println("Choice: "  + choice);
-			if(choice == 5) {
-				enemyArrived = true;
-			}
-			//TEST ENDE
+			objects.get(choice - 1).listOptions();
 			
 		}
 		
 		if(gameWon) {
 			System.out.println(gameWonText());
 		}
+		
 		if(enemyArrived) {
 			System.out.println(gameOverText());
 		}
-		
+	}
+	
+	private String welcomeText()	{
+		return "Hey!";
+	}
+	
+	private String gameWonText() {
+		return "Well done bro";
+	}
+	
+	private String gameOverText() {
+		return "Du bist am Arsch!";
+	}
+	
+	public static void main(String[] args ) {
+		Game game = new Game();
+		game.play();
 	}
 }
