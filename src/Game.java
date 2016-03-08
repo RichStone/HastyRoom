@@ -36,6 +36,7 @@ public class Game {
 			
 		objects.add(meinungsverstaerker = new UsableObj("Meinungsverstärker", "Ein solider Bambusstock", "Oh nein! Er hat Krebs!"));
 			meinungsverstaerker.addCommand("Heb ihn auf");
+		
 		objects.add(tv = new StaticObj("Fernseher", "Auf dem Uraltfernseher läuft die Wiederholung eines ProEvo Spiels in Endlosschleife.."));
 	}
 	
@@ -50,7 +51,7 @@ public class Game {
 	}
 	
 	public void play() {
-		Scanner scanner = new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in); 
 		
 		System.out.println(welcomeText());
 		
@@ -58,8 +59,11 @@ public class Game {
 			System.out.println(listObjects());
 			System.out.println("Was willst du dir genauer anschauen? Gebe die entsprechende Zahl ein und bestätige mit Enter.");
 			int choice = scanner.nextInt();
-			objects.get(choice - 1).listOptions();
-			
+			//TODO solve problem with ArrayList: static and usable obj should be displayed in a
+			// mixed order and be easy accessible (without casting)
+			//TODO add Focus method
+			Obj objToFocus = objects.get(choice - 1);
+			((UsableObj)objToFocus).focus(); // casting to specified Obj 
 		}
 		
 		if(gameWon) {

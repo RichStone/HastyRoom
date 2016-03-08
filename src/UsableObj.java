@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class UsableObj extends Obj {
 	
@@ -19,8 +20,9 @@ public class UsableObj extends Obj {
 	}
 	
 	public String listOptions() {
+
 		String allOptions = "";
-		int optionCounter = 1;
+		int optionCounter = 1;  // is used to display an index ingame
 		
 		for(String option : commands) {
 
@@ -34,6 +36,29 @@ public class UsableObj extends Obj {
 			
 		}
 		return allOptions;
+	}
+	
+	public void focus() {
+		Scanner scanner = new Scanner(System.in); //TODO determine case if input not Integer
+		boolean exited = false; //player can exit the focus any time by typing the index of "interessiert mich nicht"
+
+		while(!used && !exited) {
+		System.out.println(listOptions());	
+		System.out.println("Was willsche machen?");
+		int choice = scanner.nextInt() - 1;
+		
+		if(choice == 0) {
+			exited = true;
+		}
+		
+		react();
+		
+		}
+	}
+	
+	public void react() {
+		//TODO reaction to a choice of an option
+		System.out.println("FU so far");
 	}
 	
 	public String getDescritpionFocus () {
