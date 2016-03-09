@@ -20,24 +20,34 @@ public class Game {
 	private boolean gameWon = false;
 	private boolean enemyArrived = false;
 	
-	UsableObj hund, meinungsverstaerker;
-	StaticObj tv;
+	Obj hund, meinungsverstaerker, tv, refrigerator;
 	
 	public Game() {
 		addObjectsToGame();
 	}
 	private ArrayList<Obj> objects = new ArrayList<>();
 	
-	//at this point all the wished objects are created and described.
+	/**
+	 * at this point all the wished objects are created and described.
+	 * add an object to the objects collection and add commands to it.
+	 * don't add commands to static objects (those with two parameters).
+	 */
 	private void addObjectsToGame() {
-		objects.add(hund = new UsableObj("Hund", "der Hund liegt links neben dir auf der Couch, vielleicht ist er tot. Auf jeden Fall riecht er ganz streng", "du lehnst dich zu ihm vor. Er murmelt etwas vor sich hin, aber er ist nicht ansprechbar. "));
-			hund.addCommand("Rüttel ihn!");
-			hund.addCommand("Schlag ihn!");
+		objects.add(hund = new Obj("Hund", "der Hund liegt links neben dir auf der Couch, vielleicht ist er tot. Auf jeden "
+				+ "Fall riecht er ganz streng", "du lehnst dich zu ihm vor. Er murmelt etwas vor sich hin, aber er ist "
+						+ "nicht ansprechbar. "));
+			hund.addCommand(new Command("Rüttel ihn.", "Nur ein leises Grummeln."));
+			hund.addCommand(new Command("Schlag ihn!", "Nur ein Grummeln."));
 			
-		objects.add(meinungsverstaerker = new UsableObj("Meinungsverstärker", "Ein solider Bambusstock", "Oh nein! Er hat Krebs!"));
-			meinungsverstaerker.addCommand("Heb ihn auf");
+		objects.add(meinungsverstaerker = new Obj("Meinungsverstärker", "Ein solider Bambusstock", "Oh nein! Er hat Krebs!"));
+			meinungsverstaerker.addCommand(new Command("Heb ihn auf!", "Er ist zu schwer, schade..."));
 		
-		objects.add(tv = new StaticObj("Fernseher", "Auf dem Uraltfernseher läuft die Wiederholung eines ProEvo Spiels in Endlosschleife.."));
+		objects.add(tv = new Obj("Fernseher", "\n\tAuf dem Uraltfernseher läuft die Wiederholung eines ProEvo "
+				+ "Spiels in Endlosschleife.."));
+			tv.addCommand(new Command("zerstöre","kaputt"));
+		
+		objects.add(refrigerator = new Obj("Kühlschrank", "Alter weißer Kühlschrank, so klein wie ein Zwerg.", "Der Kühlschrank "
+				+ "ist leer, nur zwei Flaschen Bitburger an der Seite und ein verdächtiger weißer Beutel im offenen Tiefkühlfach.."));
 	}
 	
 	private String listObjects() {
@@ -57,13 +67,10 @@ public class Game {
 		
 		while(!gameWon && !enemyArrived) {
 			System.out.println(listObjects());
-			System.out.println("Was willst du dir genauer anschauen? Gebe die entsprechende Zahl ein und bestätige mit Enter.");
+			System.out.println("Was möchtest du dir anschauen? Gebe die entsprechende Zahl ein und bestätige mit Enter.");
+			// TODO add rule for out of bounds input
 			int choice = scanner.nextInt();
-			//TODO solve problem with ArrayList: static and usable obj should be displayed in a
-			// mixed order and be easy accessible (without casting)
-			//TODO add Focus method
-			Obj objToFocus = objects.get(choice - 1);
-			((UsableObj)objToFocus).focus(); // casting to specified Obj 
+			objects.get(choice - 1).focus();
 		}
 		
 		if(gameWon) {
