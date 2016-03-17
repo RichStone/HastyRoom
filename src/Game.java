@@ -51,7 +51,7 @@ public class Game {
 		objects.add(refrigerator = new UsableObj("Kühlschrank", "Alter weißer Kühlschrank, so klein wie ein Zwerg.", "Der Kühlschrank "
 				+ "ist leer, nur zwei Flaschen Bitburger an der Seite und ein verdächtiger weißer Beutel im offenen Tiefkühlfach.."));
 		
-		objects.add(phrasenschwein = new Obj("Phrasenschwein", "Da sind ne Menge Sachen drin, aber die brauchst du jetzt nicht."));
+		objects.add(phrasenschwein = new Obj("Phrasenschwein", "Da sind ne Menge Sachen drin, aber die brauchst du jetzt nicht.\n"));
 	}
 	
 	private String listObjects() {
@@ -67,45 +67,43 @@ public class Game {
 	public void play() {
 		Scanner scanner = new Scanner(System.in); 
 		
-		System.out.println(welcomeText());
+		System.out.println(welcome());
 		
 		while(!gameWon && !gameLost) {
-			System.out.println(listObjects());
+			System.out.println(listObjects()+"\n");
 			System.out.println("Was möchtest du dir anschauen? Gebe die entsprechende Zahl ein und bestätige mit Enter."
-					+ " (Seit vorsichtig mit der Eingabe!)");
+					+ " (Sei vorsichtig mit der Eingabe!)\n");
 			// TODO add rule for out of bounds input
 			int choice = scanner.nextInt() - 1;
+			
+			//concurrent test of game exit and out of bounds inputs
 			if(choice > objects.size() || choice < 0) {
 				System.out.println("Es war ein Fehler, sich mit dem System anzulegen!\n");
 				gameLost = true;
 			}
-			else if(objects.get(choice) instanceof UsableObj) {
-				UsableObj actualObj = (UsableObj)(objects.get(choice));
-				actualObj.focus();
-			}
-			else if(objects.get(choice) instanceof Obj) {
-				System.out.println(objects.get(choice).getDescription());
+			else {
+				objects.get(choice).focus();
 			}
 		}
 		
 		if(gameWon) {
-			System.out.println(gameWonText());
+			System.out.println(gameWon());
 		}
 		
 		if(gameLost) {
-			System.out.println(gameOverText());
+			System.out.println(gameOver());
 		}
 	}
 	
-	private String welcomeText()	{
+	private String welcome()	{
 		return "Hey!";
 	}
 	
-	private String gameWonText() {
+	private String gameWon() {
 		return "Well done bro";
 	}
 	
-	private String gameOverText() {
+	private String gameOver() {
 		return "Du bist am Arsch!";
 	}
 	

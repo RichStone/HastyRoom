@@ -14,29 +14,7 @@ public class UsableObj extends Obj {
 		commands.add(exitCommand = new Command("Interessiert dich nicht.", "Hop Hop\n")); //Any interactable object may be exited at any time
 	}
 	
-	//TODO Try catch here with Illegal Argument exception or something
-	public void addCommand(Command command) {
-			commands.add(command);
-	}
-	
-	public String listCommands() {
-
-		String allCommands = "";
-		int commandIndex = 1;  // is used to display an index ingame
-		
-		for(Command accessibleCommand : commands) {
-
-			if(used) {
-				return "Da gibt's nix mehr zu holen Kollege";
-			}
-			
-			allCommands += commandIndex + ". " + accessibleCommand.getCommandDescription() + "\n";
-			
-			commandIndex++;
-		}
-		return allCommands;
-	}
-	
+	@Override	
 	public void focus() {
 		System.out.println(getDescription());
 		// TODO add rule for out of bounds input
@@ -68,6 +46,30 @@ public class UsableObj extends Obj {
 		}
 	}
 	
+	
+	//TODO Try catch here with Illegal Argument exception or something
+	public void addCommand(Command command) {
+			commands.add(command);
+	}
+	
+	public String listCommands() {
+
+		String allCommands = "";
+		int commandIndex = 1;  // is used to display an index ingame
+		
+		for(Command accessibleCommand : commands) {
+
+			if(used) {
+				return "Da gibt's nix mehr zu holen Kollege";
+			}
+			
+			allCommands += commandIndex + ". " + accessibleCommand.getCommandDescription() + "\n";
+			
+			commandIndex++;
+		}
+		return allCommands;
+	}
+
 	public String getDescriptionFocus () {
 		return descriptionFocus;
 	}

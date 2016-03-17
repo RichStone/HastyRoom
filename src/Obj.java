@@ -9,7 +9,7 @@
  * interactable object.
  */
 
-public class Obj {
+public class Obj { 
 	
 	boolean used; // gets true when all commands or an irrevocable action was taken	
 	
@@ -23,6 +23,12 @@ public class Obj {
 		used = false;
 		this.name = name;
 		this.description = description;
+	}
+	
+	//TODO The Object being descripted doesn't stay unused after second 
+	//click and still shows the Object's initial description by the first click.
+	public void focus() { 
+		System.out.println(getDescription());
 	}
 	
 	public int clicks() {
