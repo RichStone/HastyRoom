@@ -7,7 +7,7 @@ public class UsableObj extends Obj {
 	
 	private ArrayList <Command> commands = new ArrayList<>(); // contains the possible commands of interaction with an object
 
-	//2nd constructor for interactable objects
+	//constructor for interactable objects
 	public UsableObj (String name, String description, String descriptionFocus) {
 		super(name, description);
 		this.descriptionFocus = descriptionFocus;
@@ -22,7 +22,10 @@ public class UsableObj extends Obj {
 		boolean exited = false; //player can exit the focus any time by typing the index of "interessiert mich nicht"
 		
 		if(used) {
-			Game game = new Game();
+			//FIXME new game is created every time an used object is being tried to use!
+			//should jump out of focus somehow in another manner!
+			//return 0 or -1 for example?
+			Game game = new Game(); 
 			System.out.println("Da gibt's nichts mehr zu sehen!");
 			game.play();
 		}
@@ -37,7 +40,10 @@ public class UsableObj extends Obj {
 			}
 			else {
 				if(commands.get(choice) instanceof IrrevocableCommand) {
-					changeUsedStatus(); // TODO add text reaction! how to make it all work from the IrrevocableCommand interface?
+					changeUsedStatus(); // TODO add text reaction! 
+					//how to make it all work from the IrrevocableCommand interface?
+					//MAYBE: add method reactionText() to UsableObj which has a setter
+					// where you can put the reaction text and give it as a parameter to changeUsedStatus?
 				}
 				else {
 					System.out.println(commands.get(choice).getReactionString());

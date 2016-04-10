@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 public class Game {
 	
-	private boolean gameWon = false;
+	private boolean gameWon = false; // different events take place
 	private boolean gameLost = false;
 	
 	public Game() {
@@ -79,13 +79,13 @@ public class Game {
 			//concurrent test of game exit and out of bounds inputs
 			if(choice > objects.size() || choice < 0) {
 				System.out.println("Es war ein Fehler, sich mit dem System anzulegen!\n");
-				gameLost = true;
+				gameLost = true; // harsh punishment for a wrong input :)
 			}
 			else {
 				objects.get(choice).focus();
 			}
 		}
-		
+		 // POSSIBLE END OF GAME:
 		if(gameWon) {
 			System.out.println(gameWon());
 		}
